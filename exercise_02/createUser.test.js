@@ -1,41 +1,40 @@
 import createUser from "./createUser.js";
+import onError from "./callbacks/onError.js";
+import onSuccess from "./callbacks/onSuccess.js";
+import onError from "./callbacks/onError.js";
+import createUser from "./createUser.js";
 
-// Mock functions for testing
-const onErrorMock = jest.fn();
-const onSuccessMock = jest.fn();
+describe("Given function createUser", () => {
+  describe("When the function is called with an empty string value", () => {
+    test("Then the text Error: user not created should be returned.", () => {
+      // Arrange
+      const email = "";
 
-describe("createUser function", () => {
-  test("should call onError callback if random number is greater than 0.5", () => {
-    const originalMathRandom = Math.random;
-    Math.random = jest.fn(() => 0.6);
+      // Act
+      const result = createUser(email, onError, onSuccess);
 
-    const email = "test@example.com";
-    createUser(email, onErrorMock, onSuccessMock);
-
-    expect(onErrorMock).toHaveBeenCalled();
-    expect(onSuccessMock).not.toHaveBeenCalled();
-
-    Math.random = originalMathRandom;
+      // Assert
+      expect(result).toEqual("Error: user not created");
+    });
   });
+  describe("When the function is called with a value of type string", () => {
+    const email = "nil.farras@mataro.epiaedu.cat";
+    test(
+      "Then the text User with email " +
+        email +
+        " has been correctly created should be returned.",
+      () => {
+        // Arrange
+        const email = "nil.farras@mataro.epiaedu.cat";
 
-  test("should call onError callback if email is empty", () => {
-    const email = "";
-    createUser(email, onErrorMock, onSuccessMock);
+        // Act
+        const result = createUser(email, onError, onSuccess);
 
-    expect(onErrorMock).toHaveBeenCalled();
-    expect(onSuccessMock).not.toHaveBeenCalled();
-  });
-
-  test("should call onSuccess callback with the correct email", () => {
-    const originalMathRandom = Math.random;
-    Math.random = jest.fn(() => 0.4);
-
-    const email = "test@example.com";
-    createUser(email, onErrorMock, onSuccessMock);
-
-    expect(onSuccessMock).toHaveBeenCalledWith(email);
-    expect(onErrorMock).not.toHaveBeenCalled();
-
-    Math.random = originalMathRandom;
+        // Assert
+        expect(result).toEqual(
+          "User with email " + email + " has been correctly created"
+        );
+      }
+    );
   });
 });

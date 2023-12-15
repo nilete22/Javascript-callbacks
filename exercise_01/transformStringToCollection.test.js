@@ -1,31 +1,66 @@
+import onError from "./callbacks/onError.js";
+import onSuccess from "./callbacks/onSuccess.js";
 import transformStringToArray from "./transformStringToCollection.js";
 
-// Mock functions for testing
-const onErrorMock = jest.fn();
-const onSuccessMock = jest.fn();
+describe("Given function transformStringToArray", () => {
+  describe("When the function is called with a value of type number", () => {
+    test("Then an empty array should be returned.", () => {
+      // Arrange
+      const value = 8;
 
-describe("transformStringToArray function", () => {
-  test("should call onError callback if value is not a string", () => {
-    const value = 123;
-    transformStringToArray(value, onErrorMock, onSuccessMock);
+      // Act
+      const result = transformStringToArray(value, onError, onSuccess);
 
-    expect(onErrorMock).toHaveBeenCalled();
-    expect(onSuccessMock).not.toHaveBeenCalled();
+      // Assert
+      expect(result).toEqual([]);
+    });
   });
+  describe("When the function is called with a value of type array", () => {
+    test("Then an empty array should be returned.", () => {
+      // Arrange
+      const value = [8, 9, 10, 11, 12, 13];
 
-  test("should call onError callback if value is an empty string", () => {
-    const value = "";
-    transformStringToArray(value, onErrorMock, onSuccessMock);
+      // Act
+      const result = transformStringToArray(value, onError, onSuccess);
 
-    expect(onErrorMock).toHaveBeenCalled();
-    expect(onSuccessMock).not.toHaveBeenCalled();
+      // Assert
+      expect(result).toEqual([]);
+    });
   });
+  describe("When the function is called with a value of type boolean", () => {
+    test("Then an empty array should be returned.", () => {
+      // Arrange
+      const value = true;
 
-  test("should call onSuccess callback with the correct value", () => {
-    const value = "Hello, World!";
-    transformStringToArray(value, onErrorMock, onSuccessMock);
+      // Act
+      const result = transformStringToArray(value, onError, onSuccess);
 
-    expect(onSuccessMock).toHaveBeenCalledWith(value);
-    expect(onErrorMock).not.toHaveBeenCalled();
+      // Assert
+      expect(result).toEqual([]);
+    });
+  });
+  describe("When the function is called with an empty string value", () => {
+    test("Then an empty array should be returned.", () => {
+      // Arrange
+      const value = "";
+
+      // Act
+      const result = transformStringToArray(value, onError, onSuccess);
+
+      // Assert
+      expect(result).toEqual([]);
+    });
+  });
+  describe("When the function is called with a value of type string", () => {
+    test("Then an empty array should be returned.", () => {
+      // Arrange
+      const value = "Hello I'm Nil";
+
+      // Act
+      const result = transformStringToArray(value, onError, onSuccess);
+
+      // Assert
+      expect(result).toEqual(["Hello", "I'm", "Nil"]);
+    });
   });
 });
