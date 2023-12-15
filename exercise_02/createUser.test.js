@@ -17,6 +17,7 @@ describe("Given function createUser", () => {
       expect(result).toEqual("Error: user not created");
     });
   });
+
   describe("When the function is called with a value of type string", () => {
     const email = "nil.farras@mataro.epiaedu.cat";
     test(
